@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag polrk/wordpress
+    - name: Log in docker hub
+      run: docker login -u polrk -p $DOCKER_TOKEN
+      env:
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+    - name: Push image to docker hub
+      run: docker push polrk/wordpress
