@@ -45,7 +45,7 @@ WORKDIR /var/www/html
 COPY --chown=nobody wordpress/wp-content /var/www/html/wp-content/
 
 # Change uploads folder permissions
-RUN mkdir -p /var/www/html/wp-content/uploads && chmod 755 /var/www/html/wp-content/uploads
+RUN mkdir -p /var/www/html/wp-content/uploads && chmod 777 /var/www/html/wp-content/uploads
 
 # Make the wordpress uploads a volume
 VOLUME /var/www/html/wp-content/uploads
