@@ -16,8 +16,8 @@ COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # WordPress
-ENV WORDPRESS_VERSION 5.2.4
-ENV WORDPRESS_SHA1 9eb002761fc8b424727d8c9d291a6ecfde0c53b7
+ENV WORDPRESS_VERSION 5.3.2
+ENV WORDPRESS_SHA1 5133e2cc70c20a28987d59266e476b3d3a9d832d
 
 RUN mkdir -p /usr/src
 
