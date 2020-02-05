@@ -17,7 +17,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # WordPress
 ENV WORDPRESS_VERSION 5.3.2
-ENV WORDPRESS_SHA1 5133e2cc70c20a28987d59266e476b3d3a9d832d
+ENV WORDPRESS_SHA1 fded476f112dbab14e3b5acddd2bcfa550e7b01b
 
 RUN mkdir -p /usr/src
 
