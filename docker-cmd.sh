@@ -1,11 +1,14 @@
 #!/bin/bash
 
 # Setup mail
-if [ -n "$MAIL_HOST" ]; then
+if [[ -n "$MAIL_HOST" ]]; then
   cat <<EOF > /etc/msmtprc
 account default
-tls on
+keepbcc on
 auth on
+tls on
+tls_starttls off
+tls_certcheck on
 host ${MAIL_HOST}
 port ${MAIL_PORT}
 user ${MAIL_USER}
