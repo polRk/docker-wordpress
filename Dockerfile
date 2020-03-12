@@ -1,9 +1,11 @@
 FROM alpine
 
 # Install packages from testing repo's
-RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl \
-    php7-zlib php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-xmlwriter \
-    php7-simplexml php7-ctype php7-mbstring php7-gd nginx supervisor msmtp curl bash less
+RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-curl php7-gd \
+    php7-zlib php7-xml php7-phar php7-intl php7-dom php7-xmlreader php7-xmlwriter php7-mbstring \
+    php7-exif php7-fileinfo php7-imagick php7-zip php7-iconv php7-simplexml php7-ctype php7-mcrypt \
+    nginx supervisor msmtp curl bash less && \
+    rm -rf /var/cache/apk/*
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
