@@ -21,8 +21,8 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/sendmail.ini /etc/php7/conf.d/sendmail.ini
 
 # WordPress
-ENV WORDPRESS_VERSION 5.3.2
-ENV WORDPRESS_SHA1 fded476f112dbab14e3b5acddd2bcfa550e7b01b
+ENV WORDPRESS_VERSION 5.4
+ENV WORDPRESS_SHA1 d5f1e6d7cadd72c11d086a2e1ede0a72f23d993e
 
 RUN mkdir -p /usr/src
 
