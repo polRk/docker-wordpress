@@ -50,7 +50,8 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/sendmail.ini /etc/php7/conf.d/sendmail.ini
 
 # Change uploads folder permissions
-RUN mkdir -p /var/www/html/wp-content/uploads && chmod 777 /var/www/html/wp-content/uploads
+RUN mkdir -p /var/www/html/wp-content/uploads && \
+    chown nobody:nobody /var/www/html/wp-content/uploads
 
 # Make the wordpress uploads a volume
 VOLUME /var/www/html/wp-content/uploads
