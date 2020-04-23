@@ -18,5 +18,3 @@ EOF
   chmod 600 /etc/msmtprc
   chown nobody /etc/msmtprc
 fi
-
-/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

@@ -7,20 +7,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
     nginx supervisor msmtp curl bash less && \
     rm -rf /var/cache/apk/*
 
-# Configure nginx
-COPY config/nginx.conf /etc/nginx/nginx.conf
-
-# Configure PHP-FPM
-COPY config/fpm-pool.conf /etc/php7/php-fpm.d/zzz_custom.conf
-COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
-
-# Configure supervisord
-COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Configure sendmail
-COPY config/sendmail.ini /etc/php7/conf.d/sendmail.ini
-
-# WordPress
+# Install WordPress
 ENV WORDPRESS_VERSION 5.4
 ENV WORDPRESS_SHA1 d5f1e6d7cadd72c11d086a2e1ede0a72f23d993e
 
@@ -37,17 +24,30 @@ RUN curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VER
 RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x /usr/local/bin/wp
 
-# WP config
-COPY --chown=nobody wordpress/wp-config.php /usr/src/wordpress
-RUN chmod 640 /usr/src/wordpress/wp-config.php
-
-# Append WP secrets
-COPY --chown=nobody wordpress/wp-secrets.php /usr/src/wordpress
-RUN chmod 640 /usr/src/wordpress/wp-secrets.php
-
 # Add application
 WORKDIR /var/www/html
 COPY --chown=nobody wordpress/wp-content /var/www/html/wp-content/
+
+# Add WP config
+COPY --chown=nobody wordpress/wp-config.php /usr/src/wordpress
+RUN chmod 640 /usr/src/wordpress/wp-config.php
+
+# Add WP secrets
+COPY --chown=nobody wordpress/wp-secrets.php /usr/src/wordpress
+RUN chmod 640 /usr/src/wordpress/wp-secrets.php
+
+# Configure nginx
+COPY config/nginx.conf /etc/nginx/nginx.conf
+
+# Configure PHP-FPM
+COPY config/fpm-pool.conf /etc/php7/php-fpm.d/zzz_custom.conf
+COPY config/php.ini /etc/php7/conf.d/zzz_custom.ini
+
+# Configure supervisord
+COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Configure sendmail
+COPY config/sendmail.ini /etc/php7/conf.d/sendmail.ini
 
 # Change uploads folder permissions
 RUN mkdir -p /var/www/html/wp-content/uploads && chmod 777 /var/www/html/wp-content/uploads
@@ -57,7 +57,4 @@ VOLUME /var/www/html/wp-content/uploads
 
 EXPOSE 80
 
-COPY docker-cmd.sh /usr/local/bin/supervisord.sh
-RUN chmod 755 /usr/local/bin/supervisord.sh
-
-CMD ["supervisord.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
